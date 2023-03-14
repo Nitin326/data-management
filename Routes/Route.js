@@ -1,0 +1,47 @@
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');
+router.use(bodyParser.urlencoded({ extended: false }));
+const userController = require('../Controller/userController');
+
+// router.get('/createuser', userController.createUser)
+
+router.get('/', (req, res) => {
+    res.render('Home');
+})
+
+router.get('/createuser', (req, res) => {
+    res.render('Createuser');
+})
+
+
+router.get('/admin', (req, res) => {
+    res.render('Admin');
+})
+
+router.get('/login', (req, res) => {
+    res.render('Login');
+})
+
+// router.get('/edituser', (req, res) => {
+//     res.render('editUser');
+// })
+
+// router.get('/searchuser', (req, res) => {
+//     res.render('searchUser');
+// })
+
+// router.get('/register', (req, res) => {
+//     res.render('Register');
+// })
+
+// // router.post('/register', (req, res) => {
+        
+// // })
+
+// router.get('/login', (req, res) => {
+//     res.render('login');
+// })
+
+
+module.exports = router;
