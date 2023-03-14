@@ -38,43 +38,66 @@ const loginUser = (req, res) => {
         errors.push({ msg: 'please fill the all fields' });
     }
 
-    if (password.length < 6) {
-        errors.push({ msg: 'password should be least 6 characteres' });
-    }
-
     if (errors.length > 0) {
         res.render('Login', {
-            errors,name,password
+            errors, name, password
         })
     }
     else {
         db.each(`SELECT * FROM mytable WHERE name = ? `, name, (err, row) => {
-            if (err) {
-                console.log(err);
-            }
 
-            if(!row){
-                errors.push({ msg: 'User not registered'})
-                res.render('Login', {
-                    errors
-                })
+            if (row.password === password) {
+                console.log("user Logged in")
+                res.redirect('/');
             }
-            else{
-                if (row.password === password) {
-                    console.log("user Logged in")
-                    res.redirect('/');
-                }
-                else {
-                    errors.push({ msg: 'Invalid Password'})
-                    res.render('Login', {
-                        errors,name
-                    })
-                }
+            else {
+                errors.push({ msg: 'Invalid Password' })
+                res.render('Login', {
+                    errors, name
+                })
             }
         })
     }
 }
 
 
+const deleteUser = async (req,res,next) => {
+    const id = req.params.id;
+}
+
+const getAlluser = async (req,res,next) => {
+    db.all("SELECT * FROM mytable", function(err, rows) {
+        res.render('Alluser', {data:rows})
+       });
+}
+
+
 exports.addUser = addUser;
 exports.loginUser = loginUser;
+exports.deleteUser = deleteUser;
+exports.getAlluser = getAlluser;
+
+
+
+// db.each(`SELECT * FROM mytable WHERE name = ? `, name, (err, row) => {
+
+//     if(row.name != name ){
+//         console.log("user nahi h");
+//         errors.push({ msg: 'User not registered'})
+//         res.render('Login', {
+//             errors
+//         })
+//     }
+//     else{
+//         if (row.password === password) {
+//             console.log("user Logged in")
+//             res.redirect('/');
+//         }
+//         else {
+//             errors.push({ msg: 'Invalid Password'})
+//             res.render('Login', {
+//                 errors,name
+//             })
+//         }
+//     }
+// })

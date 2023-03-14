@@ -23,7 +23,9 @@ router.get('/login', (req, res) => {
     res.render('Login');
 })
 
-router.post('/login', userController.loginUser)
+router.post('/login', userController.loginUser);
+
+router.get('/Alluser', userController.getAlluser)
 
 // router.get('/edituser', (req, res) => {
 //     res.render('editUser');
