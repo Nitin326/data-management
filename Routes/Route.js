@@ -12,8 +12,7 @@ router.get('/createuser', (req, res) => {
     res.render('Createuser');
 })
 
-router.post('/createuser', userController.addUser)
-
+router.post('/createuser', userController.addUser);
 
 router.get('/admin', (req, res) => {
     res.render('Admin');
@@ -26,6 +25,14 @@ router.get('/login', (req, res) => {
 router.post('/login', userController.loginUser);
 
 router.get('/Alluser', userController.getAlluser)
+
+router.get('/edit/:sn',userController.updateUser);
+
+router.get('/:sn',userController.deleteUser);
+
+module.exports = router;
+
+
 
 // router.get('/edituser', (req, res) => {
 //     res.render('editUser');
@@ -46,6 +53,3 @@ router.get('/Alluser', userController.getAlluser)
 // router.get('/login', (req, res) => {
 //     res.render('login');
 // })
-
-
-module.exports = router;
