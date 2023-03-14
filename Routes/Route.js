@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: false }));
 const userController = require('../Controller/userController');
 
-// router.get('/createuser', userController.createUser)
-
 router.get('/', (req, res) => {
     res.render('Home');
 })
@@ -13,6 +11,8 @@ router.get('/', (req, res) => {
 router.get('/createuser', (req, res) => {
     res.render('Createuser');
 })
+
+router.post('/createuser', userController.addUser)
 
 
 router.get('/admin', (req, res) => {
@@ -22,6 +22,8 @@ router.get('/admin', (req, res) => {
 router.get('/login', (req, res) => {
     res.render('Login');
 })
+
+router.post('/login', userController.loginUser)
 
 // router.get('/edituser', (req, res) => {
 //     res.render('editUser');
