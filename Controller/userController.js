@@ -114,23 +114,52 @@ const getAlluser = async (req, res, next) => {
 }
 
 const updateUser = (req, res) => {
+    const sn = req.params.sn;
+    var name = req.body.username;
+    var empid = req.body.empid;
+    var userid = req.body.userid;
+    var password = req.body.password;
+    var cUser = req.body.createUser;
+    var dUser = req.body.deleteUser;
+    var upload = req.body.upload;
+    var indexpdf = req.body.indexpdf;
+    var exclRep = req.body.exclRep;
+    var editpdf = req.body.editpdf;
+    var delpdf = req.body.delpdf;
 
-    // var sn = 4;
-    // var name = "ramesh";
-    // var empid = "nnn";
+    if (cUser != '1') {
+        cUser = "0";
+    }
+    if (dUser != '1') {
+        dUser = "0";
+    }
+    if (upload != '1') {
+        upload = "0";
+    }
+    if (indexpdf != '1') {
+        indexpdf = "0";
+    }
+    if (exclRep != '1') {
+        exclRep = "0";
+    }
+    if (editpdf != '1') {
+        editpdf = "0";
+    }
+    if (delpdf != '1') {
+        delpdf = "0";
+    }
 
-    // db.run(
-    //     `UPDATE mytable SET name = ?, empid = ?, userid = ?, password = ?, cUser = ?, dUser = ?,upload = ?,indexpdf = ?,exclRep = ?,editpdf = ?,delpdf = ? WHERE sn = ?`,
-    //     [name, empid, userid, password, cUser, dUser, upload, indexpdf, exclRep, editpdf, delpdf, sn],
-    //     function (error) {
-    //         if (error) {
-    //             console.error(error.message);
-    //         }
-    //         console.log(`Row ${sn} has been updated`);
-    //     }
-    // );
-    // res.redirect('/alluser');
-    console.log("update chal reha h")
+    db.run(
+        `UPDATE mytable SET name = ?, empid = ?, userid = ?, password = ?, cUser = ?, dUser = ?,upload = ?,indexpdf = ?,exclRep = ?,editpdf = ?,delpdf = ? WHERE sn = ?`,
+        [name, empid, userid, password, cUser, dUser, upload, indexpdf, exclRep, editpdf, delpdf, sn],
+        function (error) {
+            if (error) {
+                console.error(error.message);
+            }
+            console.log(`Row ${sn} has been updated`);
+        }
+    );
+    res.redirect('/alluser')
 }
 
 

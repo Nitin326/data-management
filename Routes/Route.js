@@ -4,9 +4,7 @@ const bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: false }));
 const userController = require('../Controller/userController');
 
-router.get('/', (req, res) => {
-    res.render('Home');
-})
+router.get('/', userController.getAlluser)
 
 router.get('/createuser', (req, res) => {
     res.render('Createuser');
@@ -22,11 +20,18 @@ router.get('/login', (req, res) => {
     res.render('Login');
 })
 
+router.get('/edit/:sn', (req, res) => {
+    var id = req.params.sn;
+    res.render('Edit',{val:id});
+})
+
+router.post('/edit/:sn', userController.updateUser);
+
 router.post('/login', userController.loginUser);
 
-router.get('/Alluser', userController.getAlluser)
-
-router.get('/edit/:sn',userController.updateUser);
+router.get('/edit/:sn',(req,res) => {
+    res.render('Edit');
+});
 
 router.get('/:sn',userController.deleteUser);
 
