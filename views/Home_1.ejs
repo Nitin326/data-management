@@ -15,8 +15,70 @@
 <body>
     <%- include('./public/Navbar.ejs') %>
     <div class="container">
-<h1> hiiii fromm  home_1 page </h1>
-     
+        <div class="table-responsive">
+            <table id="mytable" class="table table-bordred table-striped">
+
+                <thead>
+                    <th>SR NO</th>
+                    <th>FILE NAME</th>
+                    <th>YEAR</th>
+                    <th>CODE</th>
+                    <th>TALUK</th>
+                    <th>HOBLI</th>
+                    <th>VILLAGE</th>
+                    <th>SURVEY NUMBER</th>
+                </thead>
+                <tbody>
+
+                    <% home_1.forEach(function(item){ %>
+                        <tr>
+                            <td>
+                                <%= item.SRNO %>
+                            </td>
+                            <td>
+                                <%= item.FILENAME %>
+                            </td>
+                            <td>
+                                <%= item.YEAR %>
+                            </td>
+                            <td>
+                                <%= item.CODE %>
+                            </td>
+                            <td>
+                                <%= item.TALUK %>
+                            </td>
+                            <td>
+                                <%= item.HOBLI %>
+                            </td>
+                            <td>
+                                <%= item.VILLAGE %>
+                            </td>
+                            <td>
+                                <%= item.SURVEYNUMBER %>
+                            </td>
+                            <td>
+                                <a href="/edit/<%= item.sn %>">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#exampleModalCenter">
+                                        Update
+                                    </button>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/<%= item.sn %>">
+                                    <p data-placement="top" data-toggle="tooltip" title="Delete">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#exampleModalCenter">
+                                            Delete
+                                        </button>
+                                    </p>
+                                </a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
 
     </div>
 </body>

@@ -31,15 +31,14 @@ const addUser = (req, res) => {
 }
 
 const table = (req, res) => {
-    var list = req.body.list;
-    var index = req.body.index;
+    var list = req.query.list;
+    var index = req.query.index;
 
     console.log("list is running-----------------------",list);
     console.log("index is running-----------------------",index);
 
     //for creating coloum inside list
-    db.execute("ALTER TABLE List ADD COLUMN ?", (index))
-
+    // db.run(`ALTER TABLE ${list} ADD ${index}`);
 
     //getting data from List table
     db.all(`SELECT * FROM List`, (error, row) => {
@@ -80,6 +79,8 @@ const table = (req, res) => {
 
 const Home = (req, res) => {
     console.log("Home is==================-------");
+    // const value = req.query.name;
+    // console.log("home name value is-------",value);
 
     //getting data from List table
     db.all(`SELECT * FROM List`, (error, rows) => {
@@ -87,21 +88,26 @@ const Home = (req, res) => {
             console.log("erorrrr in table--userController----",error);
         }
         console.log("list row is-------",rows);
-        res.render('Home', { home:rows })
+        res.render('Home', { homes:rows })
     });
 }
 
 const home_1 = (req, res) => {
 
-    // //getting data from List table
-    // db.all(`SELECT * FROM List`, (error, row) => {
-    //     if (error) {
-    //         console.log("erorrrr in table--userController----",error);
-    //     }
-    //     console.log("list row is-------",row);
-    //     // res.render('tables',{home:row})
+    const indexName = req.query.name;
+    console.log("home_1 hi hu name value is-------",indexName);
 
-    // });
+    //getting data from List table
+    db.all(`SELECT * FROM ${indexName}`, (error, row) => {
+    // db.all(`SELECT * FROM ${indexName} WHERE SRNO = 1`,[indexName], (error, row) => {
+    // db.all(`SELECT * FROM indexvalue`, (error, row) => {
+        if (error) {
+            console.log("erorrrr in table--userController----",error);
+        }
+        console.log("home_1 row is-------",row);
+        res.render('Home_1',{home_1:row})
+
+    });
 }
 
 

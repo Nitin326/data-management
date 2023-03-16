@@ -4,24 +4,30 @@ const bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: false }));
 const userController = require('../Controller/userController');
 
-router.get('/', (req, res) => {
-    res.render('Home');
-})
+// router.get('/', (req, res) => {
+//     res.render('Home');
+// })
+router.get('/',userController.Home)
 
-router.post('/', userController.Home)
+// router.post('/', userController.Home)
 
-router.get('/home_1', (req, res) => {
-    res.render('Home_1');
-})
+// router.get('/home_1', (req, res) => {
+//     res.render('Home_1');
+// })
 
-router.post('/home_1', userController.home_1)
+// router.post('/home_1', userController.home_1)
+
+router.get('/home_1',userController.home_1)
 
 
-router.get('/table', (req, res) => {
-    res.render('tables');
-})
 
-router.post('/table', userController.table)
+// router.get('/table', (req, res) => {
+//     res.render('tables');
+// })
+
+// router.post('/table', userController.table)
+
+router.get('/table', userController.table)
 
 
 router.get('/createuser', (req, res) => {
