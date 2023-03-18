@@ -1,5 +1,9 @@
 const sqlite3 = require('sqlite3').verbose();
 const express = require('express');
+const cookieParser = require("cookie-parser");
+var jwt = require('jsonwebtoken');
+
+
 
 
 let db = new sqlite3.Database('./database.db', sqlite3.OPEN_READWRITE, (err) => {
@@ -59,8 +63,11 @@ const addUser = (req, res) => {
 
 
 const loginUser = (req, res) => {
+
     var name = req.body.username;
     var password = req.body.password;
+
+    console.log(name + " " + password);
 
     let errors = [];
 
@@ -75,10 +82,23 @@ const loginUser = (req, res) => {
     }
     else {
         db.each(`SELECT * FROM mytable WHERE name = ? `, name, (err, row) => {
-
+           
             if (row.password === password) {
-                console.log("user Logged in")
-                res.redirect('/');
+                console.log("user Logged in");
+                var token = jwt.sign(
+                    {
+                       name:row.name,
+                       empid:row.empid
+                    }, 
+                    'secret',
+                    {
+                        expiresIn:"1h"
+                    })
+            
+                    console.log(token);
+                    res.cookie('jwt',token, { httpOnly: true, secure: true, maxAge: 3600000 })
+                    res.render("Admin",{token:token});
+                    // res.status(200).json({message:"ok",token:token})
             }
             else {
                 errors.push({ msg: 'Invalid Password' })
@@ -99,7 +119,7 @@ const deleteUser = (req, res) => {
         if (error) {
             return console.error(error.message);
         }
-        res.redirect('/alluser')
+        res.render('Admin');
     });
 
 }
@@ -109,7 +129,9 @@ const getAlluser = async (req, res, next) => {
         if (err) {
             console.log(err);
         }
-        res.render('Alluser', { data: rows })
+        // console.log(rows);
+        res.render('Alluser', {data:rows})
+        // res.status(200).json(rows);
     });
 }
 
@@ -156,10 +178,9 @@ const updateUser = (req, res) => {
             if (error) {
                 console.error(error.message);
             }
-            console.log(`Row ${sn} has been updated`);
         }
     );
-    res.redirect('/alluser')
+    res.render('Admin');
 }
 
 

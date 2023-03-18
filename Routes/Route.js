@@ -3,8 +3,10 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: false }));
 const userController = require('../Controller/userController');
+const checkAuth = require('../middleware/auth')
+var jwt = require('jsonwebtoken');
 
-router.get('/', userController.getAlluser)
+router.get('/',checkAuth,userController.getAlluser)
 
 router.get('/createuser', (req, res) => {
     res.render('Createuser');
@@ -12,13 +14,22 @@ router.get('/createuser', (req, res) => {
 
 router.post('/createuser', userController.addUser);
 
-router.get('/admin', (req, res) => {
+router.get('/admin',(req, res) => {
+    // res.status(200).json({message:"all done"});
     res.render('Admin');
+})
+
+router.get('/logout', async (req, res) => {
+    req.cookies.jwt = "";
+    console.log("le ho gya shyad" + req.cookies.jwt);
+    res.render('login');
 })
 
 router.get('/login', (req, res) => {
     res.render('Login');
 })
+
+
 
 router.get('/edit/:sn', (req, res) => {
     var id = req.params.sn;
@@ -35,13 +46,13 @@ router.get('/edit/:sn',(req,res) => {
 
 router.get('/:sn',userController.deleteUser);
 
+
+
+
 module.exports = router;
 
 
 
-// router.get('/edituser', (req, res) => {
-//     res.render('editUser');
-// })
 
 // router.get('/searchuser', (req, res) => {
 //     res.render('searchUser');
