@@ -1,7 +1,9 @@
 const express = require('express');
+const path = require('path');
 const router = express.Router();
 const bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: false }));
+
 const userController = require('../Controller/userController');
 
 // router.get('/', (req, res) => {
@@ -18,6 +20,12 @@ router.get('/',userController.Home)
 // router.post('/home_1', userController.home_1)
 
 router.get('/home_1',userController.home_1)
+
+// router.get('/pdfView',userController.pdfView)
+router.get('/pdfView', (req, res) => {
+    // res.render('pdfView',{pdfPaths : '../assets/pdf/ravi.pdf'});
+    res.render('pdfView',{pdfPaths : '../assets/pdf/savi.pdf'});
+})
 
 
 
@@ -55,11 +63,11 @@ router.get('/list', (req, res) => {
 
 router.post('/list', userController.listUser);
 
-router.get('/userindex', (req, res) => {
-    res.render('addIndex');
+router.get('/pdfPath', (req, res) => {
+    res.render('pdfPath');
 })
 
-router.post('/userindex', userController.userindex);
+router.post('/pdfPath', userController.pdfPath);
 
 // router.get('/searchuser', (req, res) => {
 //     res.render('searchUser');

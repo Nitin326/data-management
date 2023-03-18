@@ -110,6 +110,11 @@ const home_1 = (req, res) => {
     });
 }
 
+const pdfView = (req, res) => {
+
+    res.render('pdfView', { pdf: '../assets/pdf/ravi.pdf' });
+}
+
 
 const loginUser = (req, res) => {
     var name = req.body.username;
@@ -220,7 +225,7 @@ const listUser = (req, res) => {
 
 
 
-const userindex = (req, res) => {
+const pdfPath = (req, res) => {
     var name = req.body.username;
 
     let errors = [];
@@ -236,40 +241,53 @@ const userindex = (req, res) => {
     }
     else {
 
-    db.run("CREATE TABLE IF NOT EXISTS addIndex (sn INTEGER PRIMARY KEY, name TEXT)");
-
-        
-    db.all(`SELECT * FROM addIndex WHERE name = ?`,name, (error, row,) => {
-        console.log("row=============addIndex=========================",row );
+    db.run("CREATE TABLE IF NOT EXISTS addPath (sn INTEGER PRIMARY KEY, path TEXT)");
 
 
-        let object = Object.assign({}, ...row)
-        console.log("object is --------------", object);
-        console.log("object is --------------", object.name == name);
 
-        if(object.name == name){
-        console.log("inside if----addIndex-");
-        //make alert section
-        res.redirect('/userindex')
-        
-        }
-    else{
-            console.log("insde else-------------addIndex--------------------");     
-            db.run(
-              `INSERT INTO addIndex (name) VALUES (?)`,
-              [name],
-              function (error) {
-              if (error) {
-                  console.error(error.message);
-              }
-              console.log(`Inserted a row with addIndex the ID: ${this.lastID}`);
-              }
-          );  
-
-        }
-
-  });
+  db.run(
+    `UPDATE addPath SET path = ? WHERE sn = ?`,
+    [name, 1],
+    function (error) {
+      if (error) {
+        console.error(error.message);
+      }
+      console.log(`Row has been updated`);
     }
+  );
+
+
+        
+    // db.all(`SELECT * FROM addIndex WHERE name = ?`,name, (error, row,) => {
+    //     console.log("row=============addIndex=========================",row );
+
+
+    //     let object = Object.assign({}, ...row)
+    //     console.log("object is --------------", object);
+    //     console.log("object is --------------", object.name == name);
+
+    //     if(object.name == name){
+    //     console.log("inside if----addIndex-");
+    //     //make alert section
+    //     res.redirect('/userindex')
+        
+        }
+    // else{
+    //         console.log("insde else-------------addIndex--------------------");     
+    //         db.run(
+    //           `INSERT INTO addIndex (name) VALUES (?)`,
+    //           [name],
+    //           function (error) {
+    //           if (error) {
+    //               console.error(error.message);
+    //           }
+    //           console.log(`Inserted a row with addIndex the ID: ${this.lastID}`);
+    //           }
+    //       );  
+
+    //     }
+
+ 
 }
 
 
@@ -280,12 +298,13 @@ const userindex = (req, res) => {
 
 exports.Home = Home;
 exports.home_1 = home_1;
+exports.pdfView = pdfView;
 exports.addUser = addUser;
 exports.loginUser = loginUser;
 exports.deleteUser = deleteUser;
 exports.getAlluser = getAlluser;
 exports.listUser = listUser;
-exports.userindex = userindex;
+exports.pdfPath = pdfPath;
 exports.table = table;
 
 
